@@ -17,4 +17,3 @@ T_Sommet *rechercherElement(T_Arbre abr, int element);
 
 #endif /* TP4_H */
 
-// test

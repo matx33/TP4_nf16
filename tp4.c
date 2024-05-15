@@ -88,6 +88,22 @@ void afficherSommets(T_Arbre abr){
     afficherSommets(abr->filsDroit);
 }
 
+void afficherElements(T_Arbre abr) {
+    if (abr == NULL) {
+        return;
+    }
+    afficherElements(abr->filsGauche);
+    printf("%d ", abr->borneInf);
+    // Si l'intervalle n'est pas un singleton, affiche les éléments entre borneInf et borneSup inclus
+    if (abr->borneInf != abr->borneSup) {
+        for (int i = abr->borneInf + 1; i <= abr->borneSup; i++) {
+            printf("%d ", i);
+        }
+    }
+    afficherElements(abr->filsDroit);
+}
+
+
 T_Arbre supprimerElement(T_Arbre abr, int element) {
     if (abr == NULL) {
         return NULL;

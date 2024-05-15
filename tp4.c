@@ -85,6 +85,71 @@ void afficherSommets(T_Arbre abr){
     afficherSommets(abr->filsDroit);
 }
 
+T_Arbre supprimerElement(T_Arbre abr, int element) {
+    if (abr == NULL) {
+        return NULL;
+    }
+
+    if (element < abr->borneInf) {
+        abr->filsGauche = supprimerElement(abr->filsGauche, element);
+    } 
+    else if (element > abr->borneSup) {
+        abr->filsDroit = supprimerElement(abr->filsDroit, element);
+    } 
+    else {
+        // Cas où l'élément est dans l'intervalle du nœud actuel
+        if (abr->borneInf == abr->borneSup) {
+            // Si l'intervalle est un singleton
+            if (abr->borneInf == element) {
+                // Suppression du nœud actuel
+                T_Sommet *nouvelleRacine = NULL;
+                if (abr->filsGauche == NULL) {
+                    nouvelleRacine = abr->filsDroit;
+                } 
+                else if (abr->filsDroit == NULL) {
+                    nouvelleRacine = abr->filsGauche;
+                } 
+                else {
+                    // Trouver le nœud le plus à droite dans le sous-arbre gauche
+                    T_Sommet *noeudMax = abr->filsGauche;
+                    while (noeudMax->filsDroit != NULL) {
+                        noeudMax = noeudMax->filsDroit;
+                    }
+                    // Échanger les bornes de l'ancienne racine avec le nœud max
+                    int temp = abr->borneInf;
+                    abr->borneInf = noeudMax->borneInf;
+                    noeudMax->borneInf = temp;
+                    // Supprimer le nœud max
+                    abr->filsGauche = supprimerElement(abr->filsGauche, noeudMax->borneInf);
+                    return abr;
+                }
+                // Libérer la mémoire de l'ancienne racine
+                free(abr);
+                return nouvelleRacine;
+            }
+        } 
+        else {
+            // Si l'intervalle n'est pas un singleton
+            if (abr->borneInf == element) {
+                abr->borneInf++;
+            } 
+            else if (abr->borneSup == element) {
+                abr->borneSup--;
+            } 
+            else {
+                // L'élément à supprimer est à l'intérieur de l'intervalle
+                // Créer un nouveau nœud pour les valeurs supérieures à l'élément
+                T_Sommet *nouveauSommet = creerSommet(element + 1);
+                nouveauSommet->filsDroit = abr->filsDroit;
+                abr->filsDroit = nouveauSommet;
+                abr->borneSup = element - 1;
+                return abr;
+            }
+        }
+    }
+    return abr;
+}
+
 int main(){
     T_Arbre abr = NULL;
     abr = insererElement(abr, 1);
@@ -100,4 +165,4 @@ int main(){
     return 0;
 }
 
-// change
+

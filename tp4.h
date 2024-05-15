@@ -16,8 +16,8 @@ T_Arbre insererElement(T_Arbre abr, int element);
 T_Sommet *rechercherElement(T_Arbre abr, int element);
 void afficherSommets(T_Arbre abr);
 T_Arbre supprimerElement(T_Arbre abr, int element);
-size_t tailleABR(T_Arbre abr);
-size_t tailleABRClassique(T_Arbre abr);
+unsigned int tailleABR(T_Arbre abr);
+unsigned int tailleABRClassique(T_Arbre abr);
 void tailleMemoire(T_Arbre abr);
 
 #endif /* TP4_H */

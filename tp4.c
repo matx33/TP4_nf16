@@ -188,7 +188,7 @@ void tailleMemoire(T_Arbre abr) {
 
     printf("Taille de l'ABR par intervalles: %zu octets\n", tailleABRIntervalle);
     printf("Taille de l'ABR dans la représentation classique: %zu octets\n", tailleABRClass);
-    printf("Nombre d'octets gagnés par la représentation par intervalles: %zu octets\n", tailleABRClass - tailleABRIntervalle);
+    printf("Nombre d'octets gagnés par la représentation par intervalles: %zu octets\n", tailleABRClass - tailleABRIntervalle); // pb ici
 }
 
 int main(){

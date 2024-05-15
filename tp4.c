@@ -30,6 +30,8 @@ T_Sommet *creerSommet(int element){
     sommet->borneSup = element;
     sommet->filsGauche = NULL;
     sommet->filsDroit = NULL;
+
+    return sommet;
 }
 
 T_Arbre insererElement(T_Arbre abr, int element){
@@ -150,6 +152,7 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
     }
     return abr;
 }
+
 
 // Calcule la taille en octets occupée par l'ABR
 size_t tailleABR(T_Arbre abr) {

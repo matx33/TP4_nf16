@@ -10,4 +10,6 @@ typedef struct T_Sommet{
 
 typedef T_Arbre *T_Sommet;
 
-// test 2
+
+T_Sommet *creerSommet(int element)
+//ff

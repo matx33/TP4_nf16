@@ -171,40 +171,40 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
 
 
 // Calcule la taille en octets occupée par l'ABR
-size_t tailleABR(T_Arbre abr) {
+unsigned int tailleABR(T_Arbre abr) {
     if (abr == NULL) {
         return 0;
     }
     // Taille du sommet
-    size_t tailleSommet = sizeof(T_Sommet);
+    unsigned int tailleSommet = sizeof(T_Sommet);
     // Taille des sous-arbres gauche et droit
-    size_t tailleGauche = tailleABR(abr->filsGauche);
-    size_t tailleDroit = tailleABR(abr->filsDroit);
+    unsigned int tailleGauche = tailleABR(abr->filsGauche);
+    unsigned int tailleDroit = tailleABR(abr->filsDroit);
     // Taille totale de l'ABR
     return tailleSommet + tailleGauche + tailleDroit;
 }
 
 // Calcule la taille en octets qu'aurait occupé un ABR dans la représentation classique
-size_t tailleABRClassique(T_Arbre abr) {
+unsigned int tailleABRClassique(T_Arbre abr) {
     if (abr == NULL) {
         return 0;
     }
     // Taille d'un élément individuel de l'ensemble (par exemple, un entier)
-    size_t tailleElement = sizeof(int);
+    unsigned int tailleElement = sizeof(int);
     // Taille des sous-arbres gauche et droit
-    size_t tailleGauche = tailleABRClassique(abr->filsGauche);
-    size_t tailleDroit = tailleABRClassique(abr->filsDroit);
+    unsigned int tailleGauche = tailleABRClassique(abr->filsGauche);
+    unsigned int tailleDroit = tailleABRClassique(abr->filsDroit);
     // Taille totale de l'ABR dans la représentation classique
     return tailleElement + tailleGauche + tailleDroit;
 }
 
 void tailleMemoire(T_Arbre abr) {
-    size_t tailleABRIntervalle = tailleABR(abr);
-    size_t tailleABRClass = tailleABRClassique(abr);
+    unsigned int tailleABRIntervalle = tailleABR(abr);
+    unsigned int tailleABRClass = tailleABRClassique(abr);
 
-    printf("Taille de l'ABR par intervalles: %zu octets\n", tailleABRIntervalle);
-    printf("Taille de l'ABR dans la représentation classique: %zu octets\n", tailleABRClass);
-    printf("Nombre d'octets gagnés par la représentation par intervalles: %zu octets\n", tailleABRClass - tailleABRIntervalle); // pb ici
+    printf("Taille de l'ABR par intervalles: %u octets\n", tailleABRIntervalle);
+    printf("Taille de l'ABR dans la représentation classique: %u octets\n", tailleABRClass);
+    printf("Nombre d'octets gagnés par la représentation par intervalles: %u octets\n", tailleABRClass - tailleABRIntervalle); // pb ici
 }
 
 int main(){

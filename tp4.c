@@ -211,6 +211,7 @@ int main(){
     abr = supprimerElement(abr, 6);
     printf("----------------\n");
     afficherSommets(abr);
+    tailleMemoire(abr);
     return 0;
 }
 

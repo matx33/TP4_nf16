@@ -26,35 +26,30 @@ T_Arbre insererElement(T_Arbre abr, int element){
     if (abr == NULL){
         return creerSommet(element);
     }
-    if (element + 1 < abr->borneInf){
-        T_sommet *nouveauSommet = creerSommet(element);
-        abr->filsGauche = nouveauSommet;
-    }
-    if (abr->borneSup + 1 < element){
-        T_sommet *nouveauSommet = creerSommet(element);
-        abr->filsDroit = nouveauSommet;
-    }
-    else{
+    // Si l'élément peut être fusionné avec le sommet actuel
+    if (element >= abr->borneInf - 1 && element <= abr->borneSup + 1){
         abr->borneInf = min(abr->borneInf, element);
         abr->borneSup = max(abr->borneSup, element);
     }
+    // Si l'élément doit être inséré à gauche
+    else if (element < abr->borneInf - 1){
+        abr->filsGauche = insererElement(abr->filsGauche, element);
+    }
+    // Si l'élément doit être inséré à droite
+    else if (element > abr->borneSup + 1){
+        abr->filsDroit = insererElement(abr->filsDroit, element);
+    }
+    // Si l'élément ne peut pas être inséré à gauche ou à droite
+    else {
+        T_Sommet *nouveauSommet = creerSommet(element);
+        if (element < abr->borneInf) {
+            abr->filsGauche = nouveauSommet;
+        } 
+        else {
+            abr->filsDroit = nouveauSommet;
+        }
+    }
+    return abr;
 }
 
-T_Arbre insererElement(T_Arbre abr, int element){
-    if (abr == NULL){
-        return creerSommet(element);
-    }
-    if (element + 1 < abr->borneInf){
-        T_sommet *nouveauSommet = creerSommet(element);
-        abr->filsGauche = nouveauSommet;
-    }
-    if (abr->borneSup + 1 < element){
-        T_sommet *nouveauSommet = creerSommet(element);
-        abr->filsDroit = nouveauSommet;
-    }
-    else{
-        abr->borneInf = min(abr->borneInf, element);
-        abr->borneSup = max(abr->borneSup, element);
-    }
-}
 

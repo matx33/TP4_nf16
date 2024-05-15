@@ -12,9 +12,6 @@
         typeof (b) _b = (b); \
         _a < _b ? _a : _b; })
 
-//1, 2, 3, 4 
-//5, 6, 7
-
 
 typedef struct T_Sommet{
     int borneInf;
@@ -33,7 +30,6 @@ T_Sommet *creerSommet(int element){
     sommet->filsGauche = NULL;
     sommet->filsDroit = NULL;
 }
-
 
 T_Arbre insererElement(T_Arbre abr, int element){
     if (abr == NULL){
@@ -101,9 +97,7 @@ int main(){
     T_Sommet *sommet = rechercherElement(abr, 10);
     afficherSommets(abr);
     printf("Sommet trouve: [%d; %d]\n", sommet->borneInf, sommet->borneSup);
-    
     return 0;
-
 }
 
 

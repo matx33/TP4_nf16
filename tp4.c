@@ -10,4 +10,3 @@ typedef struct T_Sommet{
 
 typedef T_Arbre *T_Sommet;
 
-// test

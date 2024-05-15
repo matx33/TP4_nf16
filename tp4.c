@@ -10,3 +10,5 @@ typedef struct T_Sommet{
 
 typedef T_Arbre *T_Sommet;
 
+
+T_Sommet *creerSommet(int element)

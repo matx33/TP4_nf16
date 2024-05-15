@@ -11,10 +11,6 @@ typedef struct T_Sommet{
     struct T_Sommet *filsDroit;
 } T_Sommet;
 
-typedef struct T_Arbre {
-    T_Sommet *racine;
-} T_Arbre;
-// ou 
 typedef T_Sommet* T_Arbre;
 
 

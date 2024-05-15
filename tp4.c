@@ -11,7 +11,9 @@ typedef struct T_Sommet{
     struct T_Sommet *filsDroit;
 } T_Sommet;
 
-typedef T_Arbre *T_Sommet;
+typedef struct T_Arbre {
+    T_Sommet *racine;
+} T_Arbre;
 
 
 T_Sommet *creerSommet(int element)

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 
 // Macro pour déterminer le maximum et le minimum entre deux valeurs (utilisees pour les bornes des intervalles)
 #define max(a,b) \
@@ -148,6 +149,43 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
         }
     }
     return abr;
+}
+
+// Calcule la taille en octets occupée par l'ABR
+size_t tailleABR(T_Arbre abr) {
+    if (abr == NULL) {
+        return 0;
+    }
+    // Taille du sommet
+    size_t tailleSommet = sizeof(T_Sommet);
+    // Taille des sous-arbres gauche et droit
+    size_t tailleGauche = tailleABR(abr->filsGauche);
+    size_t tailleDroit = tailleABR(abr->filsDroit);
+    // Taille totale de l'ABR
+    return tailleSommet + tailleGauche + tailleDroit;
+}
+
+// Calcule la taille en octets qu'aurait occupé un ABR dans la représentation classique
+size_t tailleABRClassique(T_Arbre abr) {
+    if (abr == NULL) {
+        return 0;
+    }
+    // Taille d'un élément individuel de l'ensemble (par exemple, un entier)
+    size_t tailleElement = sizeof(int);
+    // Taille des sous-arbres gauche et droit
+    size_t tailleGauche = tailleABRClassique(abr->filsGauche);
+    size_t tailleDroit = tailleABRClassique(abr->filsDroit);
+    // Taille totale de l'ABR dans la représentation classique
+    return tailleElement + tailleGauche + tailleDroit;
+}
+
+void tailleMemoire(T_Arbre abr) {
+    size_t tailleABRIntervalle = tailleABR(abr);
+    size_t tailleABRClass = tailleABRClassique(abr);
+
+    printf("Taille de l'ABR par intervalles: %zu octets\n", tailleABRIntervalle);
+    printf("Taille de l'ABR dans la représentation classique: %zu octets\n", tailleABRClass);
+    printf("Nombre d'octets gagnés par la représentation par intervalles: %zu octets\n", tailleABRClass - tailleABRIntervalle);
 }
 
 int main(){

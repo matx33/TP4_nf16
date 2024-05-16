@@ -170,17 +170,17 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
 }
 
 
-// Calcule la taille en octets occupée par l'ABR
+// Calcule la taille en octets occupée par l'ABR par intervalles
 unsigned int tailleABR(T_Arbre abr) {
     if (abr == NULL) {
         return 0;
     }
-    // Taille du sommet
+    // Taille de la structure de nœud (T_Sommet)
     unsigned int tailleSommet = sizeof(T_Sommet);
-    // Taille des sous-arbres gauche et droit
+    // Taille des sous-arbres gauche et droit récursivement
     unsigned int tailleGauche = tailleABR(abr->filsGauche);
     unsigned int tailleDroit = tailleABR(abr->filsDroit);
-    // Taille totale de l'ABR
+    // Taille totale de l'ABR (somme des tailles du nœud et des sous-arbres)
     return tailleSommet + tailleGauche + tailleDroit;
 }
 
@@ -191,12 +191,13 @@ unsigned int tailleABRClassique(T_Arbre abr) {
     }
     // Taille d'un élément individuel de l'ensemble (par exemple, un entier)
     unsigned int tailleElement = sizeof(int);
-    // Taille des sous-arbres gauche et droit
+    // Taille des sous-arbres gauche et droit récursivement
     unsigned int tailleGauche = tailleABRClassique(abr->filsGauche);
     unsigned int tailleDroit = tailleABRClassique(abr->filsDroit);
-    // Taille totale de l'ABR dans la représentation classique
+    // Taille totale de l'ABR dans la représentation classique (somme des tailles des éléments et des sous-arbres)
     return tailleElement + tailleGauche + tailleDroit;
 }
+
 
 void tailleMemoire(T_Arbre abr) {
     unsigned int tailleABRIntervalle = tailleABR(abr);
@@ -204,8 +205,13 @@ void tailleMemoire(T_Arbre abr) {
 
     printf("Taille de l'ABR par intervalles: %u octets\n", tailleABRIntervalle);
     printf("Taille de l'ABR dans la représentation classique: %u octets\n", tailleABRClass);
-    printf("Nombre d'octets gagnés par la représentation par intervalles: %u octets\n", tailleABRClass - tailleABRIntervalle); // pb ici
+    if (tailleABRIntervalle > tailleABRClass) {
+        printf("Nombre d'octets gagnés par la représentation par intervalles: %u octets\n", tailleABRIntervalle - tailleABRClass);
+    } else {
+        printf("Nombre d'octets gagnés par la représentation par intervalles: %u octets\n", tailleABRClass - tailleABRIntervalle);
+    }
 }
+
 
 int main(){
     T_Arbre abr = NULL;

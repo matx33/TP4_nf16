@@ -22,3 +22,4 @@ unsigned int tailleMemoireClassique(T_Arbre abr);
 void tailleMemoire(T_Arbre abr);
 
 #endif /* TP4_H */
+

@@ -15,16 +15,6 @@
         _a < _b ? _a : _b; })
 
 
-typedef struct T_Sommet{
-    int borneInf;
-    int borneSup;
-    struct T_Sommet *filsGauche;
-    struct T_Sommet *filsDroit;
-} T_Sommet;
-
-typedef T_Sommet* T_Arbre;
-
-
 T_Sommet *creerSommet(int element){
     T_Sommet *sommet = (T_Sommet *)malloc(sizeof(T_Sommet));
     sommet->borneInf = element;
@@ -254,10 +244,9 @@ unsigned int tailleMemoireClassique(T_Arbre abr) {
 
 // Fonction pour afficher la taille en octets occupée par l'ABR, la taille qu'aurait occupée un ABR dans la représentation classique, et le nombre d'octets gagnés
 void tailleMemoire(T_Arbre abr) {
-    unsigned int  tailleIntervalles = tailleMemoireIntervalles(abr);
-    unsigned int  tailleClassique = tailleMemoireClassique(abr);
-    printf("Taille en octets occupée par l'ABR dans la représentation par intervalles: %zu\n", tailleIntervalles);
-    printf("Taille en octets qu'aurait occupée un ABR dans la représentation classique: %zu\n", tailleClassique);
-    printf("Nombre d'octets gagnés par la représentation par intervalles: %zu\n", tailleClassique - tailleIntervalles);
+    unsigned int tailleIntervalles = tailleMemoireIntervalles(abr);
+    unsigned int tailleClassique = tailleMemoireClassique(abr);
+    printf("Taille en octets occupée par l'ABR dans la représentation par intervalles: %u\n", tailleIntervalles);
+    printf("Taille en octets qu'aurait occupée un ABR dans la représentation classique: %u\n", tailleClassique);
+    printf("Nombre d'octets gagnés par la représentation par intervalles: %d\n", tailleClassique - tailleIntervalles);
 }
-

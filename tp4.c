@@ -248,7 +248,7 @@ unsigned int tailleMemoireClassique(T_Arbre abr) {
 void tailleMemoire(T_Arbre abr) {
     unsigned int tailleIntervalles = tailleMemoireIntervalles(abr);
     unsigned int tailleClassique = tailleMemoireClassique(abr);
-    printf("Taille en octets occupée par l'ABR dans la représentation par intervalles: %u\n", tailleIntervalles);
-    printf("Taille en octets qu'aurait occupée un ABR dans la représentation classique: %u\n", tailleClassique);
-    printf("Nombre d'octets gagnés par la représentation par intervalles: %d\n", tailleClassique - tailleIntervalles);
+    printf("Taille en octets occupee par l'ABR dans la representation par intervalles: %u\n", tailleIntervalles);
+    printf("Taille en octets qu'aurait occupee un ABR dans la representation classique: %u\n", tailleClassique);
+    printf("Nombre d'octets gagnes par la representation par intervalles: %d\n", tailleClassique - tailleIntervalles);
 }

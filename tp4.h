@@ -2,7 +2,7 @@
 #define TP4_H
 
 typedef struct T_Sommet T_Sommet;
-typedef struct T_Sommet2 T_Sommet2;
+typedef struct T_Sommet2 T_Sommet2; // Simule un sommet classique (caractérisé par un entier unique plutot que des bornes inf et sup)
 typedef T_Sommet* T_Arbre;
 
 struct T_Sommet {

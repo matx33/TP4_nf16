@@ -262,5 +262,3 @@ void tailleMemoire(T_Arbre abr) {
     double rapport = (1-((double)tailleIntervalles / tailleClassique)) * 100;
     printf("La representation par intervalles occupe %.2f%% de moins que la representation classique.\n", rapport);
 }
-
-

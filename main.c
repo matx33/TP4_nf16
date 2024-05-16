@@ -12,6 +12,10 @@ int main() {
     abr = insererElement(abr, 3);
     abr = insererElement(abr, 6);
     abr = insererElement(abr, 8);
+    abr = insererElement(abr, 9);
+    abr = insererElement(abr, 10);
+    abr = insererElement(abr, 12);
+    abr = insererElement(abr, 13);
 
     // Affichage des éléments de l'arbre
     printf("Affichage des elements de l'arbre :\n");
@@ -42,7 +46,10 @@ int main() {
     afficherElements(abr);
     printf("\n");
 
-    // Suppression de l'élément 5 de l'arbre
+    abr = insererElement(abr, 11);
+    abr = insererElement(abr, 14);
+
+    // Suppression de l'élément 7 de l'arbre
     printf("\nSuppression de l'element %d :\n", 7);
     abr = supprimerElement(abr, 7);
     afficherSommets(abr);

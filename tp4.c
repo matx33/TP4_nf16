@@ -145,20 +145,22 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
             } 
             else if (abr->borneSup == element) {
                 abr->borneSup--;
-            } 
-            else {
-                // L'élément à supprimer est à l'intérieur de l'intervalle
-                // Créer un nouveau nœud pour les valeurs supérieures à l'élément
-                T_Sommet *nouveauSommet = creerSommet(element + 1);
-                nouveauSommet->filsDroit = abr->filsDroit;
-                abr->filsDroit = nouveauSommet;
-                abr->borneSup = element - 1;
-                return abr;
+            }
+            // Essayer de fusionner les intervalles avec le fils de gauche
+            if (abr->filsGauche != NULL && abr->filsGauche->borneSup == element - 1) {
+                abr->borneInf = abr->filsGauche->borneInf;
+                abr->filsGauche = supprimerElement(abr->filsGauche, abr->borneSup + 1);
+            }
+            // Essayer de fusionner les intervalles avec le fils de droite
+            else if (abr->filsDroit != NULL && abr->filsDroit->borneInf == element + 1) {
+                abr->borneSup = abr->filsDroit->borneSup;
+                abr->filsDroit = supprimerElement(abr->filsDroit, abr->borneInf - 1);
             }
         }
     }
     return abr;
 }
+
 
 
 // Fonction pour calculer la taille en octets occupée par l'arbre dans la représentation par intervalles

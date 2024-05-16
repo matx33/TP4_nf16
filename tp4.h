@@ -2,11 +2,18 @@
 #define TP4_H
 
 typedef struct T_Sommet T_Sommet;
+typedef struct T_Sommet2 T_Sommet2;
 typedef T_Sommet* T_Arbre;
 
 struct T_Sommet {
     int borneInf;
     int borneSup;
+    T_Arbre filsGauche;
+    T_Arbre filsDroit;
+};
+
+struct T_Sommet2 {
+    int element;
     T_Arbre filsGauche;
     T_Arbre filsDroit;
 };

@@ -24,18 +24,27 @@ int main() {
     printf("\n");
 
     // Recherche d'un élément dans l'arbre
-    int elementRecherche = 3;
-    T_Sommet *sommetRecherche = rechercherElement(abr, elementRecherche);
+    T_Sommet *sommetRecherche = rechercherElement(abr, 3);
     if (sommetRecherche != NULL) {
-        printf("Element %d trouve dans le sommet [%d; %d]\n", elementRecherche, sommetRecherche->borneInf, sommetRecherche->borneSup);
+        printf("Element %d trouve dans le sommet [%d; %d]\n", 3, sommetRecherche->borneInf, sommetRecherche->borneSup);
     } else {
-        printf("Element %d non trouve dans l'arbre\n", elementRecherche);
+        printf("Element %d non trouve dans l'arbre\n", 3);
     }
 
     // Suppression de l'élément 5 de l'arbre
-    int elementSuppression = 5;
-    printf("\nSuppression de l'element %d :\n", elementSuppression);
-    abr = supprimerElement(abr, elementSuppression);
+    printf("\nSuppression de l'element %d :\n", 5);
+    abr = supprimerElement(abr, 5);
+    afficherSommets(abr);
+    printf("\n");
+
+    // Affichage des éléments de l'arbre
+    printf("Affichage des elements de l'arbre :\n");
+    afficherElements(abr);
+    printf("\n");
+
+    // Suppression de l'élément 5 de l'arbre
+    printf("\nSuppression de l'element %d :\n", 7);
+    abr = supprimerElement(abr, 7);
     afficherSommets(abr);
     printf("\n");
 

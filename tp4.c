@@ -162,7 +162,6 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
 }
 
 
-
 // Fonction pour calculer la taille en octets occupée par l'arbre dans la représentation par intervalles
 unsigned int tailleMemoireIntervalles(T_Arbre abr) {
   if (abr == NULL) {
@@ -206,7 +205,7 @@ unsigned int tailleMemoireClassique(T_Arbre abr) {
   }
 
   // Taille d'un nœud interne
-  unsigned int tailleSommet = sizeof(T_Sommet);
+  unsigned int tailleSommet = sizeof(T_Sommet2);
 
   // Taille des sous-arbres gauche et droit
   unsigned int tailleGauche = tailleMemoireClassique(abr->filsGauche);
@@ -237,7 +236,7 @@ unsigned int tailleMemoireClassique(T_Arbre abr) {
   }
 
   // Taille totale du nœud (taille du nœud + taille des sous-arbres * nombre d'éléments)
-  unsigned int tailleNoeud = tailleSommet + nbElements * sizeof(int);
+  unsigned int tailleNoeud = tailleSommet + nbElements * tailleSommet;
 
   return tailleNoeud;
 }
@@ -246,8 +245,12 @@ unsigned int tailleMemoireClassique(T_Arbre abr) {
 
 // Fonction pour afficher la taille en octets occupée par l'ABR, la taille qu'aurait occupée un ABR dans la représentation classique, et le nombre d'octets gagnés
 void tailleMemoire(T_Arbre abr) {
+    unsigned int tailleSommet = sizeof(T_Sommet);
+    unsigned int tailleSommet2 = sizeof(T_Sommet2);
     unsigned int tailleIntervalles = tailleMemoireIntervalles(abr);
     unsigned int tailleClassique = tailleMemoireClassique(abr);
+    printf("Taille en octets d'un sommet pour la version intervalles: %u\n", tailleSommet);
+    printf("Taille en octets d'un sommet classique: %u\n", tailleSommet2);
     printf("Taille en octets occupee par l'ABR dans la representation par intervalles: %u\n", tailleIntervalles);
     printf("Taille en octets qu'aurait occupee un ABR dans la representation classique: %u\n", tailleClassique);
     printf("Nombre d'octets gagnes par la representation par intervalles: %d\n", tailleClassique - tailleIntervalles);

@@ -245,13 +245,22 @@ unsigned int tailleMemoireClassique(T_Arbre abr) {
 
 // Fonction pour afficher la taille en octets occupée par l'ABR, la taille qu'aurait occupée un ABR dans la représentation classique, et le nombre d'octets gagnés
 void tailleMemoire(T_Arbre abr) {
+    // Calcul des tailles pour les différents types de nœuds et représentations
     unsigned int tailleSommet = sizeof(T_Sommet);
     unsigned int tailleSommet2 = sizeof(T_Sommet2);
     unsigned int tailleIntervalles = tailleMemoireIntervalles(abr);
     unsigned int tailleClassique = tailleMemoireClassique(abr);
+    
+    // Impression des informations
     printf("Taille en octets d'un sommet pour la version intervalles: %u\n", tailleSommet);
     printf("Taille en octets d'un sommet classique: %u\n", tailleSommet2);
     printf("Taille en octets occupee par l'ABR dans la representation par intervalles: %u\n", tailleIntervalles);
     printf("Taille en octets qu'aurait occupee un ABR dans la representation classique: %u\n", tailleClassique);
     printf("Nombre d'octets gagnes par la representation par intervalles: %d\n", tailleClassique - tailleIntervalles);
+    
+    // Calcul du rapport entre les deux représentations en pourcentage
+    double rapport = (1-((double)tailleIntervalles / tailleClassique)) * 100;
+    printf("La representation par intervalles occupe %.2f%% de moins que la representation classique.\n", rapport);
 }
+
+

@@ -170,46 +170,94 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
 }
 
 
-// Calcule la taille en octets occupée par l'ABR par intervalles
-unsigned int tailleABR(T_Arbre abr) {
-    if (abr == NULL) {
-        return 0;
+// Fonction pour calculer la taille en octets occupée par l'arbre dans la représentation par intervalles
+unsigned int tailleMemoireIntervalles(T_Arbre abr) {
+  if (abr == NULL) {
+    return 0;
+  }
+
+  // Taille de chaque sommet dans la représentation par intervalles
+  unsigned int tailleSommet = sizeof(T_Sommet);
+
+  // Variable pour compter le nombre d'intervalles uniques
+  unsigned int nbIntervalles = 1;
+
+  // Parcourir l'arbre récursivement
+  if (abr->filsGauche != NULL) {
+    nbIntervalles += tailleMemoireIntervalles(abr->filsGauche);
+
+    // Vérifier si l'intervalle du fils gauche se termine à la même borne que l'intervalle actuel
+    if (abr->filsGauche->borneSup == abr->borneInf - 1) {
+      nbIntervalles--; // Fusionner les intervalles adjacents
     }
-    // Taille de la structure de nœud (T_Sommet)
-    unsigned int tailleSommet = sizeof(T_Sommet);
-    // Taille des sous-arbres gauche et droit récursivement
-    unsigned int tailleGauche = tailleABR(abr->filsGauche);
-    unsigned int tailleDroit = tailleABR(abr->filsDroit);
-    // Taille totale de l'ABR (somme des tailles du nœud et des sous-arbres)
-    return tailleSommet + tailleGauche + tailleDroit;
+  }
+
+  if (abr->filsDroit != NULL) {
+    nbIntervalles += tailleMemoireIntervalles(abr->filsDroit);
+
+    // Vérifier si l'intervalle du fils droit commence à la même borne que l'intervalle actuel
+    if (abr->filsDroit->borneInf == abr->borneSup + 1) {
+      nbIntervalles--; // Fusionner les intervalles adjacents
+    }
+  }
+
+  // Taille totale de l'arbre (sommet + taille des intervalles des fils)
+  unsigned int tailleArbre = tailleSommet * nbIntervalles;
+  return tailleArbre;
 }
 
-// Calcule la taille en octets qu'aurait occupé un ABR dans la représentation classique
-unsigned int tailleABRClassique(T_Arbre abr) {
-    if (abr == NULL) {
-        return 0;
-    }
-    // Taille d'un élément individuel de l'ensemble (par exemple, un entier)
-    unsigned int tailleElement = sizeof(int);
-    // Taille des sous-arbres gauche et droit récursivement
-    unsigned int tailleGauche = tailleABRClassique(abr->filsGauche);
-    unsigned int tailleDroit = tailleABRClassique(abr->filsDroit);
-    // Taille totale de l'ABR dans la représentation classique (somme des tailles des éléments et des sous-arbres)
-    return tailleElement + tailleGauche + tailleDroit;
-}
 
+unsigned int tailleMemoireClassique(T_Arbre abr) {
+  if (abr == NULL) {
+    return 0; // Taille d'un nœud feuille (singleton)
+  }
 
-void tailleMemoire(T_Arbre abr) {
-    unsigned int tailleABRIntervalle = tailleABR(abr);
-    unsigned int tailleABRClass = tailleABRClassique(abr);
+  // Taille d'un nœud interne
+  unsigned int tailleSommet = sizeof(T_Sommet);
 
-    printf("Taille de l'ABR par intervalles: %u octets\n", tailleABRIntervalle);
-    printf("Taille de l'ABR dans la représentation classique: %u octets\n", tailleABRClass);
-    if (tailleABRIntervalle > tailleABRClass) {
-        printf("Nombre d'octets gagnés par la représentation par intervalles: %u octets\n", tailleABRIntervalle - tailleABRClass);
+  // Taille des sous-arbres gauche et droit
+  unsigned int tailleGauche = tailleMemoireClassique(abr->filsGauche);
+  unsigned int tailleDroite = tailleMemoireClassique(abr->filsDroit);
+
+  // Déterminer le nombre d'éléments représentés par le nœud actuel
+  int nbElements = 1; // Compte l'élément actuel
+  if (abr->filsGauche != NULL) {
+    // Si le fils gauche existe, ajouter le nombre d'éléments dans son sous-arbre
+    if (abr->filsGauche->borneSup == abr->borneInf - 1) {
+      // Intervalle adjacent, fusionner les éléments
+      nbElements += abr->filsGauche->borneSup - abr->filsGauche->borneInf + 1;
     } else {
-        printf("Nombre d'octets gagnés par la représentation par intervalles: %u octets\n", tailleABRClass - tailleABRIntervalle);
+      // Intervalles distincts, ajouter le nombre d'éléments du sous-arbre
+      nbElements += tailleMemoireClassique(abr->filsGauche);
     }
+  }
+
+  if (abr->filsDroit != NULL) {
+    // Si le fils droit existe, ajouter le nombre d'éléments dans son sous-arbre
+    if (abr->filsDroit->borneInf == abr->borneSup + 1) {
+      // Intervalle adjacent, fusionner les éléments
+      nbElements += abr->filsDroit->borneSup - abr->filsDroit->borneInf + 1;
+    } else {
+      // Intervalles distincts, ajouter le nombre d'éléments du sous-arbre
+      nbElements += tailleMemoireClassique(abr->filsDroit);
+    }
+  }
+
+  // Taille totale du nœud (taille du nœud + taille des sous-arbres * nombre d'éléments)
+  unsigned int tailleNoeud = tailleSommet + nbElements * sizeof(int);
+
+  return tailleNoeud;
+}
+
+
+
+// Fonction pour afficher la taille en octets occupée par l'ABR, la taille qu'aurait occupée un ABR dans la représentation classique, et le nombre d'octets gagnés
+void tailleMemoire(T_Arbre abr) {
+    unsigned int  tailleIntervalles = tailleMemoireIntervalles(abr);
+    unsigned int  tailleClassique = tailleMemoireClassique(abr);
+    printf("Taille en octets occupée par l'ABR dans la représentation par intervalles: %zu\n", tailleIntervalles);
+    printf("Taille en octets qu'aurait occupée un ABR dans la représentation classique: %zu\n", tailleClassique);
+    printf("Nombre d'octets gagnés par la représentation par intervalles: %zu\n", tailleClassique - tailleIntervalles);
 }
 
 

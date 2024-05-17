@@ -115,7 +115,6 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
     return abr;
 }
 
-
 unsigned int tailleMemoireIntervalles(T_Arbre abr) {
     if (abr == NULL) {
         return 0;

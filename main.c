@@ -28,10 +28,13 @@ int main() {
     printf("Tailles mémoire de l'arbre :\n");
     tailleMemoire(abr);
     
-    printf("\n");
-    printf("\n");
-    obtenirRacine(T_Arbre abr);
-
+    // Obtention et affichage de la racine de l'arbre
+    T_Arbre racine = obtenirRacine(abr);
+    if (racine != NULL) {
+        printf("\nRacine de l'arbre: [%d; %d]\n", racine->borneInf, racine->borneSup);
+    } else {
+        printf("\nL'arbre est vide, pas de racine à afficher.\n");
+    }
 
     return 0;
 }

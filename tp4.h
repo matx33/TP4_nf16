@@ -31,5 +31,8 @@ void tailleMemoire(T_Arbre abr);
 // Nouvelle fonction pour obtenir la racine de l'arbre
 T_Arbre obtenirRacine(T_Arbre abr);
 
+// Fonctions pour insérer et supprimer plusieurs éléments
+void insererPlusieursElements(T_Arbre *abr);
+void supprimerPlusieursElements(T_Arbre *abr);
 
 #endif /* TP4_H */

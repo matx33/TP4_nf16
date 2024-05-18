@@ -137,6 +137,9 @@ void tailleMemoire(T_Arbre abr) {
     unsigned int tailleClassique = tailleMemoireClassique(abr);
     printf("Taille memoire de l'arbre (version intervalles): %u octets\n", tailleIntervalles);
     printf("Taille memoire de l'arbre (version classique): %u octets\n", tailleClassique);
+    printf("Nombre d'octets gagnes par la representation par intervalles: %d\n", tailleClassique - tailleIntervalles);
+    double rapport = (1-((double)tailleIntervalles / tailleClassique)) * 100;
+    printf("La representation par intervalles occupe %.2f%% de moins que la representation classique.\n", rapport);
 }
 
 T_Arbre obtenirRacine(T_Arbre abr) {

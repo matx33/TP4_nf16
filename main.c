@@ -6,16 +6,14 @@
 
 void afficherMenu() {
     printf("\nMenu:\n");
-    printf("1. Inserer un element\n");
-    printf("2. Inserer plusieurs elements\n");
-    printf("3. Rechercher un element\n");
-    printf("4. Supprimer un element\n");
-    printf("5. Supprimer plusieurs elements\n");
-    printf("6. Afficher les sommets de l'arbre\n");
-    printf("7. Afficher les elements de l'arbre\n");
-    printf("8. Afficher la taille memoire de l'arbre\n");
-    printf("9. Afficher la racine de l'arbre\n");
-    printf("10. Quitter\n");
+    printf("1. Inserer un ou plusieurs elements\n");
+    printf("2. Rechercher un element\n");
+    printf("3. Supprimer un ou plusieurs elements\n");
+    printf("4. Afficher les sommets de l'arbre\n");
+    printf("5. Afficher les elements de l'arbre\n");
+    printf("6. Afficher la taille memoire de l'arbre\n");
+    printf("7. Afficher la racine de l'arbre\n");
+    printf("8. Quitter\n");
     printf("Choisissez une option: ");
 }
 
@@ -38,16 +36,10 @@ int main() {
 
             switch (choix) {
                 case 1:
-                    printf("Entrez l'element a inserer: ");
-                    scanf("%d", &element);
-                    abr = insererElement(abr, element);
-                    sleep(2); // Pause de 2 secondes
-                    break;
-                case 2:
                     insererPlusieursElements(&abr);
                     sleep(2); // Pause de 2 secondes
                     break;
-                case 3:
+                case 2:
                     printf("Entrez l'element a rechercher: ");
                     scanf("%d", &element);
                     resultatRecherche = rechercherElement(abr, element);
@@ -58,33 +50,26 @@ int main() {
                     }
                     sleep(2); // Pause de 2 secondes
                     break;
-                case 4:
-                    printf("Entrez l'element a supprimer: ");
-                    scanf("%d", &element);
-                    abr = supprimerElement(abr, element);
-                    printf("Element supprime.\n");
-                    sleep(2); // Pause de 2 secondes
-                    break;
-                case 5:
+                case 3:
                     supprimerPlusieursElements(&abr);
                     sleep(2); // Pause de 2 secondes
                     break;
-                case 6:
+                case 4:
                     printf("Affichage des sommets de l'arbre:\n");
                     afficherSommets(abr);
                     sleep(2); // Pause de 2 secondes
                     break;
-                case 7:
+                case 5:
                     printf("Affichage des elements de l'arbre:\n");
                     afficherElements(abr);
                     sleep(2); // Pause de 2 secondes
                     break;
-                case 8:
+                case 6:
                     printf("Tailles memoire de l'arbre:\n");
                     tailleMemoire(abr);
                     sleep(2); // Pause de 2 secondes
                     break;
-                case 9:
+                case 7:
                     if (abr != NULL) {
                         printf("Racine de l'arbre: [%d; %d]\n", abr->borneInf, abr->borneSup);
                     } else {
@@ -92,7 +77,7 @@ int main() {
                     }
                     sleep(2); // Pause de 2 secondes
                     break;
-                case 10:
+                case 8:
                     printf("Quitter le programme.\n");
                     exit(0);
                     break;

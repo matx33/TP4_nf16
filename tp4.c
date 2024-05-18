@@ -142,10 +142,6 @@ void tailleMemoire(T_Arbre abr) {
     printf("La representation par intervalles occupe %.2f%% de moins que la representation classique.\n", rapport);
 }
 
-T_Arbre obtenirRacine(T_Arbre abr) {
-    return abr;
-}
-
 void insererPlusieursElements(T_Arbre *abr) {
     char buffer[256];
     printf("Entrez les elements a inserer (separes par des espaces): ");

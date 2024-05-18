@@ -12,8 +12,7 @@ void afficherMenu() {
     printf("4. Afficher les sommets de l'arbre\n");
     printf("5. Afficher les elements de l'arbre\n");
     printf("6. Afficher la taille memoire de l'arbre\n");
-    printf("7. Afficher la racine de l'arbre\n");
-    printf("8. Quitter\n");
+    printf("7. Quitter\n");
     printf("Choisissez une option: ");
 }
 
@@ -70,14 +69,6 @@ int main() {
                     sleep(2); // Pause de 2 secondes
                     break;
                 case 7:
-                    if (abr != NULL) {
-                        printf("Racine de l'arbre: [%d; %d]\n", abr->borneInf, abr->borneSup);
-                    } else {
-                        printf("L'arbre est vide, pas de racine a afficher.\n");
-                    }
-                    sleep(2); // Pause de 2 secondes
-                    break;
-                case 8:
                     printf("Quitter le programme.\n");
                     exit(0);
                     break;

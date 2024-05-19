@@ -102,18 +102,36 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
                     return abr;
                 }
                 free(abr);
+                printf("Element %d supprime.\n", element); // Affichage d'un message indiquant la suppression réussie
                 return nouvelleRacine;
             }
         } else {
-            if (abr->borneInf == element) {
+            if (element == abr->borneInf) {
                 abr->borneInf++;
-            } else if (abr->borneSup == element) {
+            } else if (element == abr->borneSup) {
                 abr->borneSup--;
+            } else {
+                // Créer un nouveau sommet pour [borneInf, element - 1]
+                T_Sommet *nouveauGauche = creerSommet(abr->borneInf);
+                nouveauGauche->borneSup = element - 1;
+                nouveauGauche->filsGauche = abr->filsGauche;
+
+                // Créer un nouveau sommet pour [element + 1, borneSup]
+                T_Sommet *nouveauDroit = creerSommet(element + 1);
+                nouveauDroit->borneSup = abr->borneSup;
+                nouveauDroit->filsDroit = abr->filsDroit;
+
+                // Libérer le nœud actuel
+                free(abr);
+
+                // Retourner le nouveau sous-arbre avec les deux nouveaux sommets
+                return insererElement(nouveauGauche, nouveauDroit->borneInf);
             }
         }
     }
     return abr;
 }
+
 
 unsigned int tailleMemoireIntervalles(T_Arbre abr) {
     if (abr == NULL) {

@@ -85,6 +85,7 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
     } else {
         // PROBLEME POUR CE CAS QUAND ABR A DES FILS, logique totalement fausse, tester en créeant 8-8, 4-4, 6-6 puis 2-2 de supp 4
         if (abr->borneInf == abr->borneSup) {
+            printf("A supprimer: [%d; %d]\n", abr->borneInf, abr->borneSup);
             if (abr->borneInf == element) {
                 T_Sommet *nouvelleRacine = NULL;
                 if (abr->filsGauche == NULL) {

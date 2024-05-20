@@ -14,6 +14,7 @@ void afficherMenu() {
     printf("6. Afficher la taille memoire de l'arbre\n");
     printf("7. Afficher la racine de l'arbre\n");
     printf("8. Quitter\n");
+    printf("9. Rechercher le pere d'un sommet\n");
     printf("Choisissez une option: ");
 }
 
@@ -80,6 +81,18 @@ int main() {
                 case 8:
                     printf("Quitter le programme.\n");
                     exit(0);
+                    break;
+                case 9:
+                    int borneInf, borneSup;
+                    printf("Entrez les bornes du sommet pour rechercher son pere (separees par un espace): ");
+                    scanf("%d %d", &borneInf, &borneSup);
+                    T_Sommet *pere = rechercherPere(abr, borneInf);
+                    if (pere != NULL) {
+                        printf("Le pere du sommet [%d; %d] est [%d; %d].\n", borneInf, borneSup, pere->borneInf, pere->borneSup);
+                    } else {
+                        printf("Le sommet [%d; %d] n'a pas de pere dans cet arbre.\n", borneInf, borneSup);
+                    }
+                    sleep(2); // Pause de 2 secondes
                     break;
                 default:
                     printf("Choix invalide. Veuillez reessayer.\n");

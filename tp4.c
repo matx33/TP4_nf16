@@ -124,13 +124,29 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
                 nouveauDroit->filsDroit = abr->filsDroit;
                 printf("Second sommet genere par la separation: [%d; %d]\n", nouveauDroit->borneInf, nouveauDroit->borneSup);
 
-                // Libérer le nœud actuel
-                free(abr);
-
                 int x;
                 for (x = nouveauDroit->borneInf; x <= nouveauDroit->borneSup; x++) {
                     nouveauGauche = insererElement(nouveauGauche, x);
                 }
+
+                
+                printf("Fils gauche de abr: [%d; %d]\n", abr->filsGauche->borneInf, abr->filsGauche->borneSup);
+                printf("Fils droit de abr: [%d; %d]\n", abr->filsDroit->borneInf, abr->filsDroit->borneSup);
+                nouveauGauche->filsGauche = abr->filsGauche;
+                nouveauDroit->filsDroit = abr->filsDroit;
+
+                if (abr->filsGauche != NULL) {
+                    for (x = abr->filsGauche->borneInf; x <= abr->filsGauche->borneSup; x++) {
+                    nouveauGauche = insererElement(nouveauGauche, x);
+                }}
+
+                if (abr->filsDroit != NULL) {
+                    for (x = abr->filsDroit->borneInf; x <= abr->filsDroit->borneSup; x++) {
+                    nouveauGauche = insererElement(nouveauGauche, x);
+                }}
+
+                // Libérer le nœud actuel
+                free(abr);
 
                 // Retourner le nouveau sous-arbre avec les deux nouveaux sommets
                 return nouveauGauche;

@@ -83,6 +83,7 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
     } else if (element > abr->borneSup) {
         abr->filsDroit = supprimerElement(abr->filsDroit, element);
     } else {
+        // PROBLEME POUR CE CAS QUAND ABR A DES FILS
         if (abr->borneInf == abr->borneSup) {
             if (abr->borneInf == element) {
                 T_Sommet *nouvelleRacine = NULL;
@@ -129,7 +130,6 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
                     nouveauGauche = insererElement(nouveauGauche, x);
                 }
 
-                
                 printf("Fils gauche de abr: [%d; %d]\n", abr->filsGauche->borneInf, abr->filsGauche->borneSup);
                 printf("Fils droit de abr: [%d; %d]\n", abr->filsDroit->borneInf, abr->filsDroit->borneSup);
                 nouveauGauche->filsGauche = abr->filsGauche;

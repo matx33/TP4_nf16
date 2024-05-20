@@ -21,6 +21,7 @@ struct T_Sommet2 {
 T_Arbre creerSommet(int element);
 T_Arbre insererElement(T_Arbre abr, int element);
 T_Sommet *rechercherElement(T_Arbre abr, int element);
+T_Sommet* rechercherPere(T_Arbre abr, int element);
 void afficherSommets(T_Arbre abr);
 void afficherElements(T_Arbre abr);
 void insererIntervallesDroite(T_Arbre *abr, int element, int borneSup);

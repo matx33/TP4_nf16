@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdbool.h>
 
 #define max(a,b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a > _b ? _a : _b; })
 #define min(a,b) ({ typeof (a) _a = (a); typeof (b) _b = (b); _a < _b ? _a : _b; })
@@ -49,6 +50,25 @@ T_Sommet *rechercherElement(T_Arbre abr, int element) {
     }
 }
 
+// Fonction pour rechercher le père d'un élément
+T_Sommet* rechercherPere(T_Arbre abr, int element) {
+    if (abr == NULL || (abr->filsGauche == NULL && abr->filsDroit == NULL)) {
+        return NULL;
+    }
+
+    if ((abr->filsGauche && (element >= abr->filsGauche->borneInf && element <= abr->filsGauche->borneSup)) ||
+        (abr->filsDroit && (element >= abr->filsDroit->borneInf && element <= abr->filsDroit->borneSup))) {
+        return abr;
+    }
+
+    if (element < abr->borneInf) {
+        return rechercherPere(abr->filsGauche, element);
+    } else if (element > abr->borneSup) {
+        return rechercherPere(abr->filsDroit, element);
+    }
+    return NULL;
+}
+
 void afficherSommets(T_Arbre abr) {
     if (abr == NULL) {
         return;
@@ -83,31 +103,49 @@ T_Arbre supprimerElement(T_Arbre abr, int element) {
     } else if (element > abr->borneSup) {
         abr->filsDroit = supprimerElement(abr->filsDroit, element);
     } else {
-        // PROBLEME POUR CE CAS QUAND ABR A DES FILS, logique totalement fausse, tester en créeant 8-8, 4-4, 6-6 puis 2-2 de supp 4
+        // Cas où l'élément à supprimer est trouvé dans un sommet avec borneInf == borneSup
         if (abr->borneInf == abr->borneSup) {
-            printf("A supprimer: [%d; %d]\n", abr->borneInf, abr->borneSup);
-            if (abr->borneInf == element) {
-                T_Sommet *nouvelleRacine = NULL;
-                if (abr->filsGauche == NULL) {
-                    nouvelleRacine = abr->filsDroit;
-                } else if (abr->filsDroit == NULL) {
-                    nouvelleRacine = abr->filsGauche;
-                } else {
-                    T_Sommet *noeudMax = abr->filsGauche;
-                    while (noeudMax->filsDroit != NULL) {
-                        noeudMax = noeudMax->filsDroit;
+            T_Sommet *pere = rechercherPere(abr, element);
+            if (pere != NULL) {
+                // Si abr est le fils gauche de son père
+                if (pere->filsGauche == abr) {
+                    // Créer un nouveau sommet avec le fils droit de abr
+                    T_Arbre nouveauGauche = abr->filsDroit;
+                    // Faire en sorte que le fils droit de abr devienne le fils gauche du père de abr
+                    pere->filsGauche = nouveauGauche;
+                    // Si le nouveau fils gauche du père de abr a des fils gauches, les parcourir
+                    // et ajouter le fils gauche de abr à la fin de ceux-ci
+                    if (pere->filsGauche != NULL) {
+                        T_Sommet *filsCourant = pere->filsGauche;
+                        while (filsCourant->filsGauche != NULL) {
+                            filsCourant = filsCourant->filsGauche;
+                        }
+                        filsCourant->filsGauche = abr->filsGauche;
                     }
-                    int temp = abr->borneInf;
-                    abr->borneInf = noeudMax->borneInf;
-                    noeudMax->borneInf = temp;
-                    abr->filsGauche = supprimerElement(abr->filsGauche, noeudMax->borneInf);
-                    return abr;
                 }
-                free(abr);
-                printf("Element %d supprime.\n", element); // Affichage d'un message indiquant la suppression réussie
-                return nouvelleRacine;
+                // Si abr est le fils droit de son père
+                else if (pere->filsDroit == abr) {
+                    // Créer un nouveau sommet avec le fils gauche de abr
+                    T_Arbre nouveauDroit = abr->filsGauche;
+                    // Faire en sorte que le fils gauche de abr devienne le fils droit du père de abr
+                    pere->filsDroit = nouveauDroit;
+                    // Si le nouveau fils droit du père de abr a des fils droits, les parcourir
+                    // et ajouter le fils droit de abr à la fin de ceux-ci
+                    if (pere->filsDroit != NULL) {
+                        T_Sommet *filsCourant = pere->filsDroit;
+                        while (filsCourant->filsDroit != NULL) {
+                            filsCourant = filsCourant->filsDroit;
+                        }
+                        filsCourant->filsDroit = abr->filsDroit;
+                    }
+                }
             }
-        } else {
+            free(abr); // Libérer le nœud abr
+            printf("Element %d supprime.\n", element); // Affichage d'un message indiquant la suppression réussie
+            return NULL; // Retourner NULL car le nœud abr est supprimé
+        }
+        // Si l'élément n'est pas dans un sommet avec borneInf == borneSup
+        else {
             if (element == abr->borneInf) {
                 abr->borneInf++;
             } else if (element == abr->borneSup) {
@@ -216,3 +254,5 @@ void supprimerPlusieursElements(T_Arbre *abr) {
     }
     printf("Elements supprimes.\n");
 }
+
+
